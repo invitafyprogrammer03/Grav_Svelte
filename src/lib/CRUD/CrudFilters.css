@@ -9,7 +9,7 @@
   max-width: 100%;
   box-sizing: border-box;
   position: relative;
-  z-index: 5;
+  z-index: 2;
 }
 
 @media (min-width: 640px) {
@@ -87,7 +87,25 @@
   line-height: var(--grav-crud-title-line-height, 1.25);
   white-space: nowrap;
   max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--grav-crud-color-neutral);
+}
+
+@media (max-width: 640px) {
+  .crud-filters-container .filters-title {
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    font-size: 1.1rem;
+    overflow: visible;
+    text-overflow: clip;
+  }
+  .crud-filters-container .filters-header {
+    min-width: 0;
+    flex: 1 1 100%;
+  }
 }
 
 .filters-actions {
