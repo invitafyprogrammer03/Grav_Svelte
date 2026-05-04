@@ -242,7 +242,7 @@
     .crud-anim-filters {
         animation-delay: 40ms;
         position: relative;
-        z-index: 5;
+        z-index: 2;
     }
 
     .crud-anim-table {
