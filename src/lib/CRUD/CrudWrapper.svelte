@@ -239,12 +239,18 @@
         will-change: transform, opacity, filter;
     }
 
-    .crud-anim-filters { animation-delay: 40ms; }
+    .crud-anim-filters {
+        animation-delay: 40ms;
+        position: relative;
+        z-index: 100;
+    }
 
     .crud-anim-table {
         animation: grav-crud-scale-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         animation-delay: 140ms;
         transform-origin: top center;
+        position: relative;
+        z-index: 1;
     }
 
     .crud-anim-export { animation-delay: 280ms; }
