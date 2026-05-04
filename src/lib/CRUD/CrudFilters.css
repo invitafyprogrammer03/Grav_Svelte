@@ -7,6 +7,8 @@
   margin-bottom: 0.5rem;
   padding-top: 0.7rem;
   width: 100%;
+  position: relative;
+  z-index: 100;
 }
 
 @media (min-width: 640px) {
@@ -251,6 +253,10 @@
 .filter-item {
   position: relative;
   margin: auto 0;
+}
+
+.filter-item-select {
+  z-index: 200;
 }
 
 .filter-item-number {

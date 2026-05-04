@@ -10,7 +10,7 @@
     import "../typography.css";
     import Tooltip from "./Tooltip.svelte";
 
-    import { createEventDispatcher, onMount } from "svelte";
+    import { createEventDispatcher, onMount, tick } from "svelte";
     import type { FiltrosI } from "./interfaces.js";
     const dispatch = createEventDispatcher();
 
@@ -80,6 +80,63 @@
         }
     }
 
+    let containerEl: HTMLDivElement;
+    let currentAnim: Animation | null = null;
+
+    async function toggleFilters() {
+        if (!containerEl) {
+            showFilters = !showFilters;
+            return;
+        }
+        if (currentAnim) {
+            currentAnim.cancel();
+            currentAnim = null;
+        }
+
+        const startRect = containerEl.getBoundingClientRect();
+        const startWidth = startRect.width;
+        const startHeight = startRect.height;
+
+        const willOpen = !showFilters;
+        showFilters = willOpen;
+        await tick();
+
+        // Measure end state with content's natural fit-content size
+        const prevWidth = containerEl.style.width;
+        const prevHeight = containerEl.style.height;
+        const prevMaxWidth = containerEl.style.maxWidth;
+        const prevOverflow = containerEl.style.overflow;
+        containerEl.style.width = "fit-content";
+        containerEl.style.height = "auto";
+        containerEl.style.maxWidth = "100%";
+        const endRect = containerEl.getBoundingClientRect();
+        const endWidth = endRect.width;
+        const endHeight = endRect.height;
+        containerEl.style.width = prevWidth;
+        containerEl.style.height = prevHeight;
+        containerEl.style.maxWidth = prevMaxWidth;
+
+        containerEl.style.overflow = "hidden";
+        currentAnim = containerEl.animate(
+            [
+                { width: `${startWidth}px`, height: `${startHeight}px` },
+                { width: `${endWidth}px`, height: `${endHeight}px` },
+            ],
+            {
+                duration: 380,
+                easing: "ease-in-out",
+                fill: "none",
+            },
+        );
+        currentAnim.onfinish = () => {
+            containerEl.style.overflow = prevOverflow;
+            currentAnim = null;
+        };
+        currentAnim.oncancel = () => {
+            containerEl.style.overflow = prevOverflow;
+        };
+    }
+
     let dataFetched: { value: any; label: string }[][] = [];
     onMount(async () => {
         if (Filtros.length > 0) {
@@ -105,6 +162,7 @@
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
     class="crud-filters-container"
+    bind:this={containerEl}
     on:keydown={handleKeydown}
     on:click={handleClick}
     tabindex="0"
@@ -175,7 +233,7 @@
                         {#if showFilters}
                             <button
                                 type="button"
-                                on:click={() => (showFilters = !showFilters)}
+                                on:click={toggleFilters}
                                 class="filter-button filter-button-active"
                             >
                                 <i class="fa-solid fa-sliders"></i>
@@ -183,7 +241,7 @@
                         {:else}
                             <button
                                 type="button"
-                                on:click={() => (showFilters = !showFilters)}
+                                on:click={toggleFilters}
                                 class="filter-button"
                             >
                                 <i class="fa-solid fa-sliders"></i>
@@ -209,6 +267,7 @@
     </div>
     <!-- Filtros Dynamic -->
     {#if showFilters}
+        <div class="filters-animated-wrapper">
         <div class="filters-grid" style="--grid-columns: {gridColumns}">
             {#each Filtros as { tipo, label, options, service }, i}
                 {#if tipo == "text"}
@@ -310,5 +369,48 @@
                 </button>
             </Tooltip>
         </div>
+        </div>
     {/if}
 </div>
+
+<style>
+    .filters-animated-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        overflow: visible;
+    }
+
+    .filters-animated-wrapper :global(.filters-grid > *) {
+        opacity: 0;
+        animation: filterItemIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .filters-animated-wrapper :global(.filters-grid > *:nth-child(1)) { animation-delay: 0.10s; }
+    .filters-animated-wrapper :global(.filters-grid > *:nth-child(2)) { animation-delay: 0.16s; }
+    .filters-animated-wrapper :global(.filters-grid > *:nth-child(3)) { animation-delay: 0.22s; }
+    .filters-animated-wrapper :global(.filters-grid > *:nth-child(4)) { animation-delay: 0.28s; }
+    .filters-animated-wrapper :global(.filters-grid > *:nth-child(5)) { animation-delay: 0.34s; }
+    .filters-animated-wrapper :global(.filters-grid > *:nth-child(6)) { animation-delay: 0.40s; }
+    .filters-animated-wrapper :global(.filters-grid > *:nth-child(7)) { animation-delay: 0.46s; }
+    .filters-animated-wrapper :global(.filters-grid > *:nth-child(n+8)) { animation-delay: 0.52s; }
+
+    .filters-animated-wrapper > .filters-actions {
+        opacity: 0;
+        animation: filterItemIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        animation-delay: 0.55s;
+    }
+
+    @keyframes filterItemIn {
+        from {
+            opacity: 0;
+            transform: translateY(-8px);
+            filter: blur(3px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+    }
+</style>
