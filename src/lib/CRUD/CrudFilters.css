@@ -1,14 +1,15 @@
 .crud-filters-container {
   border-radius: 0.5rem;
   background-color: var(--grav-crud-color-bg);
-  width: fit-content;
   padding: 0.5rem;
   box-shadow: var(--grav-crud-box-shadow);
   margin-bottom: 0.5rem;
   padding-top: 0.7rem;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   position: relative;
-  z-index: 100;
+  z-index: 5;
 }
 
 @media (min-width: 640px) {
@@ -16,6 +17,45 @@
     margin-bottom: 0.5rem;
     margin-top: 0.25rem;
     width: fit-content;
+  }
+}
+
+@media (max-width: 640px) {
+  .filters-header {
+    flex-wrap: wrap;
+  }
+  .filters-title {
+    white-space: normal;
+    word-break: break-word;
+    font-size: 1.15rem;
+  }
+  .filters-actions {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .filters-controls {
+    flex-wrap: wrap;
+  }
+  .crud-filters-container > .filters-actions {
+    flex-direction: row;
+    justify-content: stretch;
+    gap: 0.5rem;
+  }
+  .crud-filters-container > .filters-actions :global(.tooltip-container) {
+    flex: 1;
+  }
+  .crud-filters-container > .filters-actions .filter-button,
+  .crud-filters-container > .filters-actions .filter-apply-button {
+    width: 100%;
+  }
+  .filter-item-bool,
+  .filter-item-number,
+  .filter-item-date,
+  .filter-item-datetime,
+  .filter-item-select,
+  .filter-item {
+    width: 100%;
+    min-width: 0;
   }
 }
 

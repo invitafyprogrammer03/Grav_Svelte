@@ -93,6 +93,7 @@
             currentAnim = null;
         }
 
+        const isMobile = window.matchMedia("(max-width: 640px)").matches;
         const startRect = containerEl.getBoundingClientRect();
         const startWidth = startRect.width;
         const startHeight = startRect.height;
@@ -117,17 +118,17 @@
         containerEl.style.maxWidth = prevMaxWidth;
 
         containerEl.style.overflow = "hidden";
-        currentAnim = containerEl.animate(
-            [
-                { width: `${startWidth}px`, height: `${startHeight}px` },
-                { width: `${endWidth}px`, height: `${endHeight}px` },
-            ],
-            {
-                duration: 380,
-                easing: "ease-in-out",
-                fill: "none",
-            },
-        );
+        const fromKf = isMobile
+            ? { height: `${startHeight}px` }
+            : { width: `${startWidth}px`, height: `${startHeight}px` };
+        const toKf = isMobile
+            ? { height: `${endHeight}px` }
+            : { width: `${endWidth}px`, height: `${endHeight}px` };
+        currentAnim = containerEl.animate([fromKf, toKf], {
+            duration: 380,
+            easing: "ease-in-out",
+            fill: "none",
+        });
         currentAnim.onfinish = () => {
             containerEl.style.overflow = prevOverflow;
             currentAnim = null;
