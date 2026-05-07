@@ -320,6 +320,7 @@
                                         {label}
                                         res={dataFetched[i]}
                                         bind:justValue={Filtros[i].value}
+                                        placeholder={Filtros[i].placeholder}
                                     />
                                 {/key}
                             {/if}
@@ -329,6 +330,7 @@
                                     {label}
                                     res={options}
                                     bind:justValue={Filtros[i].value}
+                                    placeholder={Filtros[i].placeholder}
                                 />
                             {/key}
                         {/if}
