@@ -27,6 +27,14 @@
     export let showSettingsButton: boolean = false;
     export let showMostrandoInput: boolean = true;
     export let Titulo_Crud: string;
+    export let tooltipAgregar: string = 'Agregar';
+    export let tooltipImportarExcel: string = 'Importar Excel';
+    export let tooltipVerFiltros: string = 'Ver filtros';
+    export let tooltipConfiguracion: string = 'Configuración';
+    export let tooltipLimpiar: string = 'Borrar filtro';
+    export let labelLimpiar: string = 'Limpiar';
+    export let tooltipFiltrar: string = 'Aplicar filtro';
+    export let labelFiltrar: string = 'Filtrar';
 
     // Dynamic grid columns calculation
     $: gridColumns = Math.min(Filtros.length, 6);
@@ -177,7 +185,7 @@
         <div class="filters-controls">
             <div class="filters-actions">
                 {#if showAddButton}
-                    <Tooltip text="Agregar">
+                    <Tooltip text={tooltipAgregar}>
                         <!-- svelte-ignore a11y_consider_explicit_label -->
                         <button
                             class="action-button"
@@ -202,7 +210,7 @@
                     </Tooltip>
                 {/if}
                 {#if showImportButton}
-                    <Tooltip text="Importar Excel">
+                    <Tooltip text={tooltipImportarExcel}>
                         <!-- svelte-ignore a11y_consider_explicit_label -->
                         <button
                             class="action-button"
@@ -230,7 +238,7 @@
                     </Tooltip>
                 {/if}
                 {#if Filtros && Filtros.length > 0}
-                    <Tooltip text="Ver filtros">
+                    <Tooltip text={tooltipVerFiltros}>
                         {#if showFilters}
                             <button
                                 type="button"
@@ -251,7 +259,7 @@
                     </Tooltip>
                 {/if}
                 {#if showSettingsButton}
-                    <Tooltip text="Configuración">
+                    <Tooltip text={tooltipConfiguracion}>
                         <button
                             type="button"
                             on:click={() => dispatch("settings")}
@@ -348,25 +356,25 @@
         <!-- Btn de aplicar filtro -->
         <div class="filters-actions">
             <!-- Btn de limpiar filtros -->
-            <Tooltip text="Borrar filtro">
+            <Tooltip text={tooltipLimpiar}>
                 <!-- svelte-ignore a11y_consider_explicit_label -->
                 <button
                     type="button"
                     on:click={() => clearFilters()}
                     class="filter-button"
                 >
-                    Limpiar
+                    {labelLimpiar}
                 </button>
             </Tooltip>
-            <Tooltip text="Aplicar filtro">
+            <Tooltip text={tooltipFiltrar}>
                 <!-- svelte-ignore a11y_consider_explicit_label -->
                 <button
                     type="button"
                     on:click={() => actualizarFiltro()}
                     class="filter-button filter-apply-button"
-                    aria-label="Aplicar filtros"
+                    aria-label={tooltipFiltrar}
                 >
-                    Filtrar
+                    {labelFiltrar}
                 </button>
             </Tooltip>
         </div>
