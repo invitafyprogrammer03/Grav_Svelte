@@ -168,7 +168,7 @@
     cascadeWithDefaults:
       'let cascadeInputWithDefaults: Record<string, string | null> = {\n    country: "1",\n    state: "2"\n};\n\nconst cascadeLevels = [\n    {\n        label: "Country",\n        field: "country",\n        fetchFn: async () => [\n            { value: "1", label: "USA" },\n            { value: "2", label: "Canada" },\n        ],\n        showPlusIcon: true,\n        onPlusClick: () => {\n            alert("Add new Country clicked!");\n        }\n    },\n    {\n        label: "State",\n        field: "state",\n        fetchFn: async (countryId?: string) => {\n            if (countryId === "1") {\n                return [\n                    { value: "1", label: "California" },\n                    { value: "2", label: "New York" },\n                ];\n            }\n            return [];\n        },\n        showPlusIcon: true,\n        onPlusClick: () => {\n            alert("Add new State clicked!");\n        }\n    },\n];\n\n<InputFormCascade\n    levels={cascadeLevels}\n    bind:selectedValues={cascadeInputWithDefaults}\n/>',
     image:
-      'let imageInput: HTMLInputElement;\nlet base64Preview = "";\n\n<InputFormImage \n    bind:inputFile={imageInput} \n    bind:base64Preview \n/>',
+      'let imageInput: HTMLInputElement;\nlet base64Preview = "";\n\n<InputFormImage \n    bind:inputFile={imageInput} \n    bind:base64Preview \n    labelSeleccionar="Selecciona, arrastra o pega una imagen (Ctrl+V)" \n    labelCargar="Cargar Imagen" \n    labelEliminar="Eliminar Imagen" \n    labelDropZone="Arrastra, pega o carga una imagen para previsualizar" \n/>',
   };
 
   function handleAddNewOption() {
@@ -523,7 +523,14 @@
     <h2 class="text-xl font-semibold text-gray-700 mb-4">Image Input</h2>
 
     <div class="mb-6">
-      <InputFormImage bind:inputFile={imageInput} bind:base64Preview />
+      <InputFormImage bind:inputFile={imageInput} bind:base64Preview 
+      labelSeleccionar="Select, drag or paste an image (Ctrl+V)" 
+      labelCargar="Upload Image" 
+      labelEliminar="Delete Image" 
+      labelDropZone="Drag, paste or upload an image for preview" 
+ 
+      />
+
       <span class="block mt-1 text-sm text-gray-600">
         {#if base64Preview}
           Image loaded successfully
