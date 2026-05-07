@@ -1079,6 +1079,14 @@
     {loading}
     showAddButton={true}
     showImportButton={true}
+    tooltipAgregar="Add"
+    tooltipImportarExcel="Import Excel"
+    tooltipVerFiltros="View filters"
+    tooltipConfiguracion="Settings"
+    tooltipLimpiar="Clear filters"
+    tooltipFiltrar="Apply filters"
+    labelLimpiar="Clear "
+    labelFiltrar="Filter"
     dragEnabled={true}
     columnDragEnabled={true}
     orderField="inOrden"
@@ -1133,6 +1141,14 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
     orderField="inOrden"
     idField="noMesA"
     showSettingsButton={true}
+    tooltipAgregar="Add"
+    tooltipImportarExcel="Import Excel"
+    tooltipVerFiltros="View filters"
+    tooltipConfiguracion="Settings"
+    tooltipLimpiar="Clear filters"
+    tooltipFiltrar="Apply filters"
+    labelLimpiar="Clear "
+    labelFiltrar="Filter"
     onFilter={enlistar}
     onAdd={handleAdd}
     onImport={handleImport}

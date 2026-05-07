@@ -158,7 +158,7 @@
       'let colorPickerInput = "#3B82F6";\n\n<InputFormColorPicker \n    label="Color Picker with Presets" \n    bind:valueVar={colorPickerInput} \n/>',
     bool: 'let boolInput = false;\n\n<InputFormBool \n    label="Boolean Input" \n    bind:valueVar={boolInput} \n/>',
     select:
-      'interface SelectValue {\n    value: string;\n    label: string;\n}\n\nlet selectInput: SelectValue | null = null;\nconst selectOptions = [\n    { value: "1", label: "Option 1" },\n    { value: "2", label: "Option 2" },\n    { value: "3", label: "Option 3" },\n];\n\n<InputFormSelect\n    label="Select Input"\n    bind:value={selectInput}\n    res={selectOptions}\n/>',
+      'interface SelectValue {\n    value: string;\n    label: string;\n}\n\nlet selectInput: SelectValue | null = null;\nconst selectOptions = [\n    { value: "1", label: "Option 1" },\n    { value: "2", label: "Option 2" },\n    { value: "3", label: "Option 3" },\n];\n\n<InputFormSelect\n    label="Select Input"\n    bind:value={selectInput}\n    res={selectOptions}\n    placeholder="Select an option"\n/>',
     selectMultiple:
       'interface SelectValue {\n    value: string;\n    label: string;\n}\n\nlet selectMultipleInput: SelectValue[] = [];\nconst selectOptions = [\n    { value: "1", label: "Option 1" },\n    { value: "2", label: "Option 2" },\n    { value: "3", label: "Option 3" },\n];\n\n<InputFormSelect\n    label="Select Multiple"\n    bind:value={selectMultipleInput}\n    res={selectOptions}\n    multiple={true}\n/>',
     selectWithPlus:
@@ -420,6 +420,7 @@
         label="Select Input"
         bind:value={selectInput}
         res={selectOptions}
+        placeholder="Select an option"
       />
       <span class="block mt-1 text-sm text-gray-600"
         >Selected: {selectInput?.label}</span
@@ -440,6 +441,7 @@
         res={selectOptions}
         showPlusIcon={true}
         onPlusClick={handleAddNewOption}
+        placeholder="Select an option"
       />
       <span class="block mt-1 text-sm text-gray-600"
         >Selected: {selectWithPlusInput?.label}</span
@@ -459,6 +461,7 @@
         bind:value={selectMultipleInput}
         res={selectOptions}
         multiple={true}
+        placeholder="Select an option"
       />
       <span class="block mt-1 text-sm text-gray-600"
         >Selected: {selectMultipleInput.map((s) => s.label).join(", ") ||

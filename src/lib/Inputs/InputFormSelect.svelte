@@ -20,6 +20,7 @@
   export let showPlusIcon = false;
   export let onPlusClick: () => void = () => {};
   export let multiple = false;
+  export let placeholder: string | undefined = undefined;
 
   let containerEl: HTMLDivElement;
 
@@ -129,7 +130,7 @@
       class="select-input"
       inputStyles="font-size: 16px; color: currentColor !important; background-color: transparent;"
       containerStyles="font-size: 16px; background-color: transparent; border: var(--grav-crud-input-border-width) solid currentColor; border-radius: 0.5rem;"
-      placeholder={multiple ? "Seleccione opciones" : "Seleccione una opción"}
+      placeholder={placeholder ?? (multiple ? "Seleccione opciones" : "Seleccione una opción")}
       --placeholder-color="currentColor"
       --chevron-color="currentColor"
       --item-color="black"
